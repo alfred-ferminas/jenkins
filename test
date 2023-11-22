@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean package' 
+      }
+    }
+    
+    stage('Test') {
+      steps { 
+        sh 'mvn test'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sshagent (credentials: ['your-key']) {
+          sh 'ssh user@host "mkdir -p /deploy-dir && tar -xzf app.tar.gz -C /deploy-dir"'
+        }  
+      }
+    }
+  }
+}
