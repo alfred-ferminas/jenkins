@@ -2,31 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Hello') {
             steps {
-                // Checkout source code from Git
-                git 'https://github.com/alfred-ferminas/jenkins'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // Your build commands here
-                sh 'mvn clean package' // Example for Maven build
-            }
-        }
-
-        stage('Test') {
-            steps {
-                // Your test commands here
-                sh 'mvn test' // Example for Maven test
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Your deployment commands here
-                sh './deploy.sh' // Example for a deployment script
+                echo 'Hello World'
             }
         }
     }
