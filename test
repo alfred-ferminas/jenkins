@@ -1,25 +1,33 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Build') {
-      steps {
-        sh 'mvn clean package' 
-      }
-    }
-    
-    stage('Test') {
-      steps { 
-        sh 'mvn test'
-      }
-    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout source code from Git
+                git 'https://github.com/alfred-ferminas/jenkins'
+            }
+        }
 
-    stage('Deploy') {
-      steps {
-        sshagent (credentials: ['your-key']) {
-          sh 'ssh user@host "mkdir -p /deploy-dir && tar -xzf app.tar.gz -C /deploy-dir"'
-        }  
-      }
+        stage('Build') {
+            steps {
+                // Your build commands here
+                sh 'mvn clean package' // Example for Maven build
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Your test commands here
+                sh 'mvn test' // Example for Maven test
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Your deployment commands here
+                sh './deploy.sh' // Example for a deployment script
+            }
+        }
     }
-  }
 }
